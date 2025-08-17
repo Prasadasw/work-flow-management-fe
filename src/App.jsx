@@ -12,6 +12,9 @@ import Tasks from './pages/Tasks'
 import CreateTask from './pages/CreateTask'
 import TaskDetail from './pages/TaskDetail'
 import Profile from './pages/Profile'
+import WorkflowDemo from './components/WorkflowDemo'
+import ProjectWorkflow from './pages/ProjectWorkflow'
+import ProjectReportPage from './pages/ProjectReportPage'
 
 function App() {
   return (
@@ -27,10 +30,13 @@ function App() {
           <Route path="projects" element={<Projects />} />
           <Route path="projects/create" element={<CreateProject />} />
           <Route path="projects/:id" element={<ProjectDetail />} />
+          <Route path="projects/:id/workflow" element={<ProjectWorkflow />} />
+          <Route path="projects/:id/report" element={<ProjectReportPage />} />
           <Route path="tasks" element={<Tasks />} />
           <Route path="tasks/create" element={<CreateTask />} />
           <Route path="tasks/:id" element={<TaskDetail />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="workflow-demo" element={<WorkflowDemo />} />
         </Route>
       </Routes>
     </AuthProvider>

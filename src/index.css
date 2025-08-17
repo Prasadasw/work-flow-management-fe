@@ -99,6 +99,58 @@
     @apply border-green-300 bg-green-50;
   }
 
+  /* React Flow Whiteboard Styles */
+  .react-flow__node {
+    @apply transition-all duration-200;
+  }
+
+  .react-flow__node:hover {
+    @apply shadow-lg transform scale-105;
+  }
+
+  .react-flow__edge {
+    @apply transition-all duration-200;
+  }
+
+  .react-flow__edge:hover {
+    @apply stroke-width-3;
+  }
+
+  .react-flow__controls {
+    @apply shadow-lg border border-gray-200;
+  }
+
+  .react-flow__minimap {
+    @apply shadow-lg border border-gray-200;
+  }
+
+  .react-flow__background {
+    @apply bg-gray-50;
+  }
+
+  /* Custom scrollbar for workflow modal */
+  .workflow-modal-content {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db #f9fafb;
+  }
+
+  .workflow-modal-content::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .workflow-modal-content::-webkit-scrollbar-track {
+    background: #f9fafb;
+  }
+
+  .workflow-modal-content::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 3px;
+  }
+
+  .workflow-modal-content::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+  }
+
   .workflow-task.bg-blue-100 {
     @apply border-blue-300 bg-blue-50;
   }

@@ -11,7 +11,8 @@ import {
   LogOut,
   Plus,
   Bell,
-  Search
+  Search,
+  Workflow
 } from 'lucide-react'
 
 const Layout = () => {
@@ -32,6 +33,7 @@ const Layout = () => {
     { name: 'Dashboard', href: '/', icon: Home },
     { name: 'Projects', href: '/projects', icon: FolderOpen },
     { name: 'Tasks', href: '/tasks', icon: CheckSquare },
+    { name: 'Workflow Demo', href: '/workflow-demo', icon: Workflow },
     { name: 'Profile', href: '/profile', icon: User },
   ]
 
@@ -49,7 +51,7 @@ const Layout = () => {
           className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm" 
           onClick={() => setSidebarOpen(false)} 
         />
-        <div className={`fixed inset-y-0 left-0 flex w-80 flex-col bg-white shadow-2xl transform transition-transform duration-300 ${
+        <div className={`fixed inset-y-0 left-0 flex w-64 flex-col bg-white shadow-2xl transform transition-transform duration-300 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}>
           <div className="flex h-16 items-center justify-between px-6 border-b border-gray-200">
@@ -108,7 +110,7 @@ const Layout = () => {
       </div>
 
       {/* Desktop sidebar */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-80 lg:flex-col">
+      <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <div className="flex flex-col flex-grow bg-white border-r border-gray-200 shadow-xl">
           <div className="flex h-16 items-center px-6 border-b border-gray-200">
             <h1 className="text-xl font-bold bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">
@@ -159,11 +161,9 @@ const Layout = () => {
       </div>
 
       {/* Main content */}
-      <div className="lg:pl-80">
+      <div className="lg:pl-64">
         {/* Top bar */}
-        <div className={`sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white/80 backdrop-blur-md px-4 shadow-sm transition-all duration-300 sm:gap-x-6 sm:px-6 lg:px-8 ${
-          isScrolled ? 'shadow-lg' : ''
-        }`}>
+        <div >
           <button
             type="button"
             className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
@@ -173,7 +173,7 @@ const Layout = () => {
           </button>
 
           <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-            <div className="relative flex flex-1">
+            {/* <div className="relative flex flex-1">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <Search className="h-5 w-5 text-gray-400" />
               </div>
@@ -182,13 +182,13 @@ const Layout = () => {
                 className="block h-full w-full border-0 py-0 pl-10 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
                 placeholder="Search..."
               />
-            </div>
+            </div> */}
             <div className="flex items-center gap-x-4 lg:gap-x-6">
-              <button className="relative p-2 text-gray-400 hover:text-gray-500 transition-colors">
+              {/* <button className="relative p-2 text-gray-400 hover:text-gray-500 transition-colors">
                 <Bell className="h-6 w-6" />
                 <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500"></span>
-              </button>
-              {location.pathname === '/projects' && (
+              </button> */}
+              {/* {location.pathname === '/projects' && (
                 <Link
                   to="/projects/create"
                   className="btn btn-primary flex items-center shadow-lg hover:shadow-xl transition-all duration-200"
@@ -205,7 +205,7 @@ const Layout = () => {
                   <Plus className="h-4 w-4 mr-2" />
                   New Task
                 </Link>
-              )}
+              )} */}
             </div>
           </div>
         </div>

@@ -14,10 +14,11 @@ import {
   Clock as ClockIcon,
   AlertCircle,
   Workflow,
-  X
+  FileText
 } from 'lucide-react'
 import api from '../utils/api'
 import toast from 'react-hot-toast'
+
 
 const ProjectDetail = () => {
   const { id } = useParams()
@@ -26,7 +27,6 @@ const ProjectDetail = () => {
   const [tasks, setTasks] = useState([])
   const [loading, setLoading] = useState(true)
   const [showTaskForm, setShowTaskForm] = useState(false)
-  const [showWorkflow, setShowWorkflow] = useState(false)
   const [taskFormData, setTaskFormData] = useState({
     taskTitle: '',
     taskDescription: '',
@@ -117,132 +117,7 @@ const ProjectDetail = () => {
     }
   }
 
-  const WorkflowModal = () => {
-    if (!showWorkflow) return null
 
-    const sortedTasks = [...tasks].sort((a, b) => new Date(a.date) - new Date(b.date))
-
-    return (
-      <div className="fixed inset-0 z-50 overflow-y-auto">
-        <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-          <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-            <div className="absolute inset-0 bg-gray-900 opacity-75"></div>
-          </div>
-
-          <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-6xl sm:w-full">
-            <div className="bg-white px-6 py-4 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <Workflow className="h-6 w-6 text-primary-600" />
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Project Workflow: {project?.projectName}
-                  </h3>
-                </div>
-                <button
-                  onClick={() => setShowWorkflow(false)}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                >
-                  <X className="h-5 w-5 text-gray-500" />
-                </button>
-              </div>
-            </div>
-
-            <div className="bg-gray-50 px-6 py-8">
-              {sortedTasks.length === 0 ? (
-                <div className="text-center py-12">
-                  <Target className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No tasks yet</h3>
-                  <p className="text-gray-600 mb-6">Add tasks to see the workflow diagram</p>
-                  <button
-                    onClick={() => {
-                      setShowWorkflow(false)
-                      setShowTaskForm(true)
-                    }}
-                    className="btn btn-primary inline-flex items-center"
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add First Task
-                  </button>
-                </div>
-              ) : (
-                <div className="workflow-container">
-                  <div className="workflow-timeline">
-                    {sortedTasks.map((task, index) => (
-                      <div key={task._id} className="workflow-item">
-                        <div className="workflow-node">
-                          <div className={`workflow-task ${getStatusColor(task.status)}`}>
-                            <div className="workflow-task-header">
-                              <h4 className="workflow-task-title">{task.taskTitle}</h4>
-                              <div className="workflow-task-status">
-                                {getStatusIcon(task.status)}
-                                <span className="ml-1 capitalize">{task.status}</span>
-                              </div>
-                            </div>
-                            
-                            {task.taskDescription && (
-                              <p className="workflow-task-description">{task.taskDescription}</p>
-                            )}
-                            
-                            <div className="workflow-task-meta">
-                              <div className="workflow-task-date">
-                                <Calendar className="h-4 w-4" />
-                                <span>{new Date(task.date).toLocaleDateString()}</span>
-                              </div>
-                              {task.daysSpent > 0 && (
-                                <div className="workflow-task-time">
-                                  <Clock className="h-4 w-4" />
-                                  <span>{task.daysSpent} hours</span>
-                                </div>
-                              )}
-                              <div className={`workflow-task-priority ${getPriorityColor(task.priority)}`}>
-                                {task.priority}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {index < sortedTasks.length - 1 && (
-                          <div className="workflow-arrow">
-                            <div className="workflow-arrow-line"></div>
-                            <div className="workflow-arrow-head"></div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="bg-gray-50 px-6 py-4 border-t border-gray-200">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4 text-sm text-gray-600">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <span>Completed</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                    <span>In Progress</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                    <span>Pending</span>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setShowWorkflow(false)}
-                  className="btn btn-secondary"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
 
   if (loading) {
     return (
@@ -278,11 +153,18 @@ const ProjectDetail = () => {
         </div>
         <div className="flex items-center space-x-3">
           <button
-            onClick={() => setShowWorkflow(true)}
+            onClick={() => navigate(`/projects/${id}/report`)}
+            className="btn btn-secondary inline-flex items-center"
+          >
+            <FileText className="h-4 w-4 mr-2" />
+            Project Report
+          </button>
+          <button
+            onClick={() => navigate(`/projects/${id}/workflow`)}
             className="btn btn-secondary inline-flex items-center relative"
           >
             <Workflow className="h-4 w-4 mr-2" />
-            View Workflow
+            Interactive Whiteboard
             {tasks.length > 0 && (
               <span className="ml-2 px-2 py-0.5 bg-primary-100 text-primary-800 text-xs font-medium rounded-full">
                 {tasks.length} {tasks.length === 1 ? 'task' : 'tasks'}
@@ -426,6 +308,8 @@ const ProjectDetail = () => {
         </div>
       )}
 
+
+
       {/* Tasks Section */}
       <div className="bg-white rounded-xl shadow-lg border border-gray-100">
         <div className="p-6 border-b border-gray-200">
@@ -503,8 +387,6 @@ const ProjectDetail = () => {
         )}
       </div>
 
-      {/* Workflow Modal */}
-      <WorkflowModal />
     </div>
   )
 }
